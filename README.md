@@ -1,6 +1,12 @@
-# Système de gestion d’inventaire à la maison
+# SGIM
 
-## Technos : 
+## Goal
+This project aims to implement a home inventory management system
 
-NodeJs, ...
+## language
+nodejs, typescript
+
+## compile project
+### dev
+npm run start:dev
 

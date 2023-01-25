@@ -1,0 +1,24 @@
+{
+  "name": "sgim-dev",
+  "version": "1.0.0",
+  "description": "This project aims to implement a home inventory management system",
+  "main": "app.js",
+  "scripts": {
+    "start:dev": "npx nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon build/app.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.15",
+    "express": "^4.18.2"
+  }
+}
