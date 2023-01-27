@@ -4,13 +4,13 @@ services:
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=sigm
+      - POSTGRES_DB=sgim
     ports:
       - "5432:5432"
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@sigm.com
+      - PGADMIN_DEFAULT_EMAIL=admin@sgim.com
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
       - "8080:80"
