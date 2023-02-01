@@ -51,3 +51,5 @@ Start the server dev
 
 **Server:** Node, Express, TypeScript
 
+**ORM:** [Sequelize](https://sequelize.org/)
+
