@@ -4,10 +4,14 @@ let port = 8001;
 
 const { Sequelize } = require('sequelize');
 
-// Option 1: Passing a connection URI
-const sequelize = new Sequelize('postgres://admin:admin@localhost:5432/sgim_db') // Example for postgres
-
-
+// DATABASE connection
+const sequelize = new Sequelize('postgres://admin:admin@localhost:5432/sgim_db');
+try {
+  sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 
 
 app.use((req, res, next)=> {
