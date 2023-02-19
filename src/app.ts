@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 // router import
 const user = require('./routes/user')
+const place = require('./routes/place')
 
 // DATABASE connection
 const sequelize = new Sequelize('postgres://admin:admin@localhost:5432/sgim_db');
@@ -32,6 +33,8 @@ app.get('/', function(req, res) { // création de la route sous le verbe get
 
 // Routing
 app.use('/api', user)
+// Routing
+app.use('/api', place)
 
 app.listen(port, () =>  { // ecoute du serveur sur le port 8001
     console.log('Started on port ' + port)
