@@ -1,15 +1,14 @@
 const User = require('../models').User
-
+const Place = require('../models').Place
+const { Sequelize } = require('sequelize');
 module.exports = {
 
     // get all users
-
     getAllUsers: ( req, res ) => {
 
         User.findAll( {
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-            limit: 5,
-            order: [['id', 'DESC']]
+            attribute : ['is','username'],
+            limit: 5
         }).then(users => {
             return res.status(200).json({
                 users
@@ -18,6 +17,25 @@ module.exports = {
             return res.status(400).json({err})
         })
     },
+        // get all users
+        getOneUser: ( req, res ) => {
+
+            User.findOne( {
+                where: { id: req.params.id },
+                attribute : ['id','username'],
+                include: [{
+                                model: Place,
+                                as : 'Places'
+                              }]
+            }).then(user => {
+                return res.status(200).json({
+                    user
+                })
+            }).catch(err => {
+                return res.status(400).json({err})
+            })
+        },
+
 
 
     // delete all users
@@ -36,8 +54,6 @@ module.exports = {
               })
           })
 },
-
-
 
 
 
