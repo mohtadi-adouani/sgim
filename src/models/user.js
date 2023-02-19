@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 const {
   Model
 } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define('User',{
     id: {
         allowNull: false,
@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function (models) {
       User.hasMany(models.Place, {foreignKey: 'owner_id'});
+      User.hasMany(models.Object, {foreignKey: 'owner_id'});
     };
   return User;
 };

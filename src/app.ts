@@ -4,6 +4,7 @@ const { Sequelize } = require('sequelize');
 // router import
 const user = require('./routes/user')
 const place = require('./routes/place')
+const object = require('./routes/object')
 
 // DATABASE connection
 const sequelize = new Sequelize('postgres://admin:admin@localhost:5432/sgim_db');
@@ -31,10 +32,12 @@ app.get('/', function(req, res) { // création de la route sous le verbe get
     res.send('Hello world  ! ') // envoi de hello world a l'utilisateur
 })
 
-// Routing
+// Routing users
 app.use('/api', user)
-// Routing
+// Routing places
 app.use('/api', place)
+// Routing objects
+app.use('/api', object)
 
 app.listen(port, () =>  { // ecoute du serveur sur le port 8001
     console.log('Started on port ' + port)

@@ -1,31 +1,30 @@
 const User = require('../models').User
 const Place = require('../models').Place
 const Object = require('../models').Object
-
 const { Sequelize } = require('sequelize');
 module.exports = {
 
     // get all users
-    getAllPlaces: ( req, res ) => {
+    getAllObjects: ( req, res ) => {
 
-        Place.findAll( {
+        Object.findAll( {
             limit: 5
-        }).then(places => {
+        }).then(objects => {
             return res.status(200).json({
-                places
+                objects
             })
         }).catch(err => {
             return res.status(400).json({err})
         })
     },
         // get all users
-        getOnePlace: ( req, res ) => {
+        getOneObject: ( req, res ) => {
 
             Place.findOne( {
                 where: { id: req.params.id },
-            }).then(place => {
+            }).then(object => {
                 return res.status(200).json({
-                    place
+                    object
                 })
             }).catch(err => {
                 return res.status(400).json({err})

@@ -4,16 +4,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
-//  class Place extends Model {
-//    /**
-//     * Helper method for defining associations.
-//     * This method is not a part of Sequelize lifecycle.
-//     * The `models/index` file will call this method automatically.
-//     */
-//    static associate(models) {
-//      // define association here
-//      models.Place.belongTo(models.User);
-//    }
+
 
     const Place = sequelize.define('Place', {
         id: {
@@ -56,6 +47,7 @@ module.exports = (sequelize, Sequelize) => {
         });
     Place.associate = function (models) {
         Place.belongsTo(models.User, {foreignKey: 'id'});
+        Place.hasMany(models.Object, {foreignKey: 'id'});
       };
   return Place;
 };
