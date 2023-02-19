@@ -3,6 +3,7 @@ const router = express.Router()
 const {
      getAllUsers,
      deleteAllUsers,
+     getOneUser,
 
     } = require('../controllers/user')
 
@@ -12,6 +13,10 @@ const {
 
 router.get('/users/',
     getAllUsers
+)
+
+router.get('/user/:id',
+    getOneUser
 )
 
 
