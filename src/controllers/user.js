@@ -23,6 +23,7 @@ module.exports = {
             User.findOne( {
                 where: { id: req.params.id },
                 attributes : {exclude: ['password']},
+                include: [ Place, Object ]
             }).then(user => {
                 return res.status(200).json({
                     user
