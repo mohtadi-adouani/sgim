@@ -46,8 +46,6 @@ module.exports = (sequelize, Sequelize) => {
   });
 
   User.associate = function (models) {
-      // User.hasMany(models.Place, {foreignKey: 'PlaceId'});
-      // User.hasMany(models.Object, {foreignKey: 'ObjectId'});
       User.hasMany(models.Place);
       User.hasMany(models.Object);
     };
