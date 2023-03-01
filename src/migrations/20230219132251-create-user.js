@@ -31,6 +31,14 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      // association places
+      PlaceId: {
+        type: Sequelize.UUID,
+      },
+      // association objects
+      ObjectId: {
+        type: Sequelize.UUID,
       }
     });
   },
