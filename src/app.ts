@@ -7,18 +7,10 @@ const place = require('./routes/place')
 const object = require('./routes/object')
 const tag = require('./routes/tag')
 
-// DATABASE connection
-const sequelize = new Sequelize('postgres://admin:admin@localhost:5432/sgim_db_dev');
-try {
-  sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
 
 // APP
 let app = express(); // création de l'objet représentant notre application express
-let port = 8001;
+let port = 8002;
 app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
