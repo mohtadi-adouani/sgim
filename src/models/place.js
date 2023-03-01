@@ -8,46 +8,45 @@ module.exports = (sequelize, Sequelize) => {
 
     const Place = sequelize.define('Place', {
         id: {
-                allowNull: false,
-                primaryKey: true,
-                type: Sequelize.UUID
-              },
-            owner_id : {
-                  type: Sequelize.UUID,
-                  allowNull: false,
-                  references : {
-                    model : 'Users',
-                    key : 'id'
-                  }
-              },
-            status_public : {
-                type: Sequelize.BOOLEAN,
-                defaultValue: false,
-            },
-            shared_with : {
-                  type: Sequelize.UUID,
-            },
-              name: {
-                type: Sequelize.STRING
-              },
-              description: {
-                type: Sequelize.STRING
-              },
-              parentId: {
-                type: Sequelize.STRING
-              },
-              createdAt: {
-                allowNull: false,
-                type: Sequelize.DATE
-              },
-              updatedAt: {
-                allowNull: false,
-                type: Sequelize.DATE
-              }
+            allowNull: false,
+            primaryKey: true,
+            type: Sequelize.UUID
+        },
+        status_public : {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        name: {
+            type: Sequelize.STRING
+        },
+        description: {
+            type: Sequelize.STRING
+        },
+        createdAt: {
+            allowNull: false,
+            type: Sequelize.DATE
+        },
+        updatedAt: {
+            allowNull: false,
+            type: Sequelize.DATE
+        },
+        // association users
+        UserId: {
+            type: Sequelize.UUID,
+        },
+        // association objects
+        ObjectId: {
+            type: Sequelize.UUID,
+        },
+        // association tags
+        TagId: {
+            type: Sequelize.UUID,
+        }
         });
     Place.associate = function (models) {
-        Place.belongsTo(models.User, {foreignKey: 'id'});
-        Place.hasMany(models.Object, {foreignKey: 'id'});
+        Place.belongsToMany(models.User, {through: 'UsersPlaces'});
+        Place.hasMany(models.Object);
+        Place.hasMany(models.Tag);
       };
   return Place;
 };

@@ -8,28 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-    owner_id : {
-          type: Sequelize.UUID,
-          allowNull: false,
-          references : {
-            model : 'Users',
-            key : 'id'
-          }
-      },
-    status_public : {
+      status_public : {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
-    },
-    shared_with : {
-          type: Sequelize.UUID,
-    },
+      },
       name: {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
-      },
-      parentId: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -39,6 +25,18 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      // association users
+      UserId: {
+        type: Sequelize.UUID,
+      },
+      // association objects
+      ObjectId: {
+        type: Sequelize.UUID,
+      },
+      // association tags
+      TagId: {
+        type: Sequelize.UUID,
       }
     });
   },
