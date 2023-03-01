@@ -11,6 +11,36 @@ module.exports = {
             email: 'Mohtadi@isiam.fr',
             password: 'test password',
         });
+
+        const cuisine = await Place.create({
+            name: 'Cuisine'
+        });
+        const frigo = await Place.create({
+            name: 'Frigo'
+        });
+        const placard = await Place.create({
+            name: 'placard'
+        });
+        const fourchette = await Object.create({
+            name: 'frouchette'
+        });
+        const cuillere = await Object.create({
+            name: 'cuillere'
+        });
+
+        placard.setParent(cuisine);
+        frigo.setParent(cuisine);
+
+        fourchette.setPlace(placard);
+        cuillere.setPlace(placard);
+
+        placard.addObject(fourchette);
+        placard.addObject(cuillere);
+
+
+        return res.status(200).json({
+            user1
+        })
     },
     // get all users
     getAllUsers: ( req, res ) => {
