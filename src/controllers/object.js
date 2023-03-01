@@ -1,6 +1,7 @@
 const User = require('../models').User
 const Place = require('../models').Place
 const Object = require('../models').Object
+const Tag = require('../models').Tag
 const { Sequelize } = require('sequelize');
 module.exports = {
 
@@ -22,6 +23,7 @@ module.exports = {
 
             Place.findOne( {
                 where: { id: req.params.id },
+                include: [ Tag ]
             }).then(object => {
                 return res.status(200).json({
                     object

@@ -4,46 +4,43 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
   const Object = sequelize.define('Object',{
-    id: {
-            allowNull: false,
-            primaryKey: true,
-            type: Sequelize.UUID
-          },
-          owner_id : {
-            type: Sequelize.UUID,
-            allowNull: false,
-            references : {
-              model : 'Users',
-              key : 'id'
-            }
-            },
-          name: {
-            type: Sequelize.STRING
-          },
-          description: {
-            type: Sequelize.STRING
-          },
-          place_id: {
-            type: Sequelize.UUID,
-            allowNull: false,
-            references : {
-              model : 'Place',
-              key : 'id'
-            }
-          },
-          createdAt: {
-            allowNull: false,
-            type: Sequelize.DATE
-          },
-          updatedAt: {
-            allowNull: false,
-            type: Sequelize.DATE
-          }
+      id: {
+          allowNull: false,
+          primaryKey: true,
+          type: Sequelize.UUID
+      },
+      name: {
+          type: Sequelize.STRING
+      },
+      description: {
+          type: Sequelize.STRING
+      },
+      createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+      },
+      updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+      },
+      // association users
+      UserId: {
+          type: Sequelize.UUID,
+      },
+      // association places
+      PlaceId: {
+          type: Sequelize.UUID,
+      },
+      // association tags
+      TagId: {
+          type: Sequelize.UUID,
+      }
   });
 
       Object.associate = function (models) {
-          Object.belongsTo(models.User, {foreignKey: 'id'});
-          Object.belongsTo(models.Place, {foreignKey: 'id'});
+          Object.belongsToMany(models.User, {through: 'UsersObjects'});
+          Object.belongsTo(models.Place);
+          Object.hasMany(models.Tag);
         };
 
   return Object;

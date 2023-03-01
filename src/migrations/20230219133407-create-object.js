@@ -8,28 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      owner_id : {
-        type: Sequelize.UUID,
-        allowNull: false,
-        references : {
-          model : 'Users',
-          key : 'id'
-        }
-        },
       name: {
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING
       },
-      place_id: {
-          type: Sequelize.UUID,
-          allowNull: false,
-          references : {
-            model : 'Places',
-            key : 'id'
-          }
-                },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -37,6 +21,18 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      // association users
+      UserId: {
+        type: Sequelize.UUID,
+      },
+      // association places
+      PlaceId: {
+        type: Sequelize.UUID,
+      },
+      // association tags
+      TagId: {
+        type: Sequelize.UUID,
       }
     });
   },
