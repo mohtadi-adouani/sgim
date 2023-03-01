@@ -8,7 +8,7 @@ const object = require('./routes/object')
 const tag = require('./routes/tag')
 
 // DATABASE connection
-const sequelize = new Sequelize('postgres://admin:admin@localhost:5432/sgim_db');
+const sequelize = new Sequelize('postgres://admin:admin@localhost:5432/sgim_db_dev');
 try {
   sequelize.authenticate();
   console.log('Connection has been established successfully.');

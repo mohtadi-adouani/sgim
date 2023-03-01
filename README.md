@@ -45,7 +45,11 @@ Start the server dev
   npm run start:dev
 ```
 
+Migration
 
+  For first time : 
+    npx sequelize-cli db:migrate
+  Or : npx sequelize-cli db:migrate:undo:all
 
 ## Tech Stack
 
