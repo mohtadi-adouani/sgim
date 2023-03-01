@@ -4,7 +4,9 @@ const {
      getAllUsers,
      deleteAllUsers,
      getOneUser,
-    createUser
+    createUser,
+    registerUser,
+    loginUser
 
     } = require('../controllers/user')
 
@@ -27,6 +29,16 @@ router.delete('/removeAllUsers/',
 deleteAllUsers
 )
 
+router.post("/register/",
+// our register logic goes here...
+    registerUser
+);
+
+// Login
+router.post("/login",
+// our login logic goes here
+    loginUser
+);
 
 
 // -------------------------EXPORT ROUTER-------------------------
