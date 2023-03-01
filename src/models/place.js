@@ -44,11 +44,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.UUID,
         },
         // association places (self)
-        Place_child_Id: {
+        parentId: {
             type: Sequelize.UUID,
         },
         // association places (self)
-        Place_parent_Id: {
+        childId: {
             type: Sequelize.UUID,
         }
         });
@@ -56,8 +56,8 @@ module.exports = (sequelize, Sequelize) => {
         Place.belongsToMany(models.User, {through: 'UsersPlaces'});
         Place.hasMany(models.Object);
         Place.hasMany(models.Tag);
-        Place.hasMany(models.Place,{foreignKey : "Place_parent_Id"});
-        Place.belongsTo(models.Place, {foreignKey : "Place_parent_Id"});
+        Place.hasMany(models.Place,{foreignKey : "childId"});
+        Place.belongsTo(models.Place, {foreignKey : "parentId", as: 'Parent'});
       };
   return Place;
 };

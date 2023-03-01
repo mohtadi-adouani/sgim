@@ -40,11 +40,11 @@ module.exports = {
         type: Sequelize.UUID,
       },
       // association places (self)
-      Place_child_Id: {
+      parentId: {
         type: Sequelize.UUID,
       },
       // association places (self)
-      Place_parent_Id: {
+      childId: {
         type: Sequelize.UUID,
       }
     });
