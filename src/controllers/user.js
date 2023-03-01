@@ -4,6 +4,14 @@ const Object = require('../models').Object
 const { Sequelize } = require('sequelize');
 module.exports = {
 
+    // add user
+    createUser: async (req, res) => {
+        const user1 = await User.create({
+            username: 'Mohtadi',
+            email: 'Mohtadi@isiam.fr',
+            password: 'test password',
+        });
+    },
     // get all users
     getAllUsers: ( req, res ) => {
 

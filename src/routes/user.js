@@ -4,6 +4,7 @@ const {
      getAllUsers,
      deleteAllUsers,
      getOneUser,
+    createUser
 
     } = require('../controllers/user')
 
@@ -19,7 +20,9 @@ router.get('/user/:id',
     getOneUser
 )
 
-
+router.post('/user/',
+    createUser
+)
 router.delete('/removeAllUsers/',
 deleteAllUsers
 )

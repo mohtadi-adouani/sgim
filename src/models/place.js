@@ -10,7 +10,8 @@ module.exports = (sequelize, Sequelize) => {
         id: {
             allowNull: false,
             primaryKey: true,
-            type: Sequelize.UUID
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
         },
         status_public : {
             type: Sequelize.BOOLEAN,
@@ -41,12 +42,22 @@ module.exports = (sequelize, Sequelize) => {
         // association tags
         TagId: {
             type: Sequelize.UUID,
+        },
+        // association places (self)
+        Place_child_Id: {
+            type: Sequelize.UUID,
+        },
+        // association places (self)
+        Place_parent_Id: {
+            type: Sequelize.UUID,
         }
         });
     Place.associate = function (models) {
         Place.belongsToMany(models.User, {through: 'UsersPlaces'});
         Place.hasMany(models.Object);
         Place.hasMany(models.Tag);
+        Place.hasMany(models.Place,{foreignKey : "Place_parent_Id"});
+        Place.belongsTo(models.Place, {foreignKey : "Place_parent_Id"});
       };
   return Place;
 };

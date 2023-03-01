@@ -6,7 +6,8 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       status_public : {
         type: Sequelize.BOOLEAN,
@@ -36,6 +37,14 @@ module.exports = {
       },
       // association tags
       TagId: {
+        type: Sequelize.UUID,
+      },
+      // association places (self)
+      Place_child_Id: {
+        type: Sequelize.UUID,
+      },
+      // association places (self)
+      Place_parent_Id: {
         type: Sequelize.UUID,
       }
     });
