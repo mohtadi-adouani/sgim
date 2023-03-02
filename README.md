@@ -13,7 +13,7 @@ This project aims to implement a home inventory management system
 
 
     
-## Run Locally
+# Download and install
 
 Clone the project
 
@@ -33,19 +33,62 @@ Install dependencies
   npm install
 ```
 
+Create databases
+```bash
+  # create database production
+  npx sequelize-cli db:create --env production
+  # create database development
+  npx sequelize-cli db:create --env development
+  # create database test
+  npx sequelize-cli db:create --env test
+```
+Undo and do migration
+```bash
+   # undo production migration
+   npx sequelize-cli db:migrate:undo:all --env production 
+   # undo development  migration
+   npx sequelize-cli db:migrate:undo:all --env development
+   # undo test  migration
+   npx sequelize-cli db:migrate:undo:all --env test 
+   
+   # do production migration
+   npx sequelize-cli db:migrate --env production
+   # do development migration
+   npx sequelize-cli db:migrate --env development
+   # do test migration
+   npx sequelize-cli db:migrate --env test
+```
+
+# Run 
 Start docker
 
 ```bash
   docker compose up -d
 ```
 
-Start the server dev
+Start the server production
 
 ```bash
-  npm run start:dev
+  npm run start:production
+  # or development
+  npm run start:development
 ```
 
 
+
+# Migration
+undo last migration
+```bash
+  npx sequelize-cli db:migrate:undo --env [YOUR ENV] 
+```
+undo all migration
+```bash
+  npx sequelize-cli db:migrate:undo:all --env [YOUR ENV]
+```
+migrate
+```bash
+  npx sequelize-cli db:migrate --env [YOUR ENV]
+```
 
 ## Tech Stack
 
