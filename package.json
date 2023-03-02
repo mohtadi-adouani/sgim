@@ -1,5 +1,5 @@
 {
-  "name": "sgim-dev",
+  "name": "sgim",
   "version": "1.0.0",
   "description": "This project aims to implement a home inventory management system",
   "main": "app.js",
