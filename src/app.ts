@@ -2,9 +2,9 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 // router import
-const user = require('./routes/user')
-const place = require('./routes/place')
-const object = require('./routes/object')
+const user = require('./routes/user');
+const place = require('./routes/place');
+const object = require('./routes/object');
 const tag = require('./routes/tag')
 
 // config env
@@ -28,13 +28,13 @@ app.get('/', function(req, res) { // création de la route sous le verbe get
 })
 
 // Routing users
-app.use('/api', user)
+app.use('/api/users', user);
 // Routing places
-app.use('/api', place)
+app.use('/api/places', place);
 // Routing objects
-app.use('/api', object)
+app.use('/api/objects', object);
 // Routing tags
-app.use('/api', tag)
+app.use('/api/tags', tag);
 
 app.listen(config.api_port, () =>  { // ecoute du serveur sur le port 8001
     console.log('Started on port ' + config.api_port)
