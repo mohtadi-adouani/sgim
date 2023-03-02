@@ -11,6 +11,10 @@ This project aims to implement a home inventory management system
 - [@mafracso](https://www.gitlab.com/mafracso)
 - [@moadouani](https://www.gitlab.com/moadouani)
 
+# Required 
+**Docker compose:** [Docker](https://www.docker.com/)
+
+**Node js 12.0.0 >= :** [Nodejs](https://nodejs.org/)
 
     
 # Download and install
