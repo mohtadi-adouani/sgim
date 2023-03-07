@@ -56,7 +56,7 @@ module.exports = (sequelize, Sequelize) => {
         Place.belongsToMany(models.User, {through: 'UsersPlaces'});
         Place.hasMany(models.Object);
         Place.hasMany(models.Tag);
-        Place.hasMany(models.Place,{foreignKey : "childId"});
+        Place.hasMany(models.Place,{foreignKey : "parentId", as: 'Child'});
         Place.belongsTo(models.Place, {foreignKey : "parentId", as: 'Parent'});
       };
   return Place;
