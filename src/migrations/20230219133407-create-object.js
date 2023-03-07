@@ -8,6 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+        onDelete: 'cascade', // setting onDelete to cascade
       },
       name: {
         type: Sequelize.STRING
@@ -31,13 +32,15 @@ module.exports = {
       PlaceId: {
         type: Sequelize.UUID,
       },
-      // association tags
-      TagId: {
-        type: Sequelize.UUID,
-      }
+      // // association tags
+      // TagId: {
+      //     type: Sequelize.UUID,
+      // }
     });
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('TagsObjects');
+    await queryInterface.dropTable('UsersObjects');
     await queryInterface.dropTable('Objects');
   }
 };

@@ -31,6 +31,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('TagsPlaces');
+    await queryInterface.dropTable('TagsObjects');
     await queryInterface.dropTable('Tags');
   }
 };

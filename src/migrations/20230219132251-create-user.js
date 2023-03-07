@@ -8,6 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+        onDelete: 'cascade', // setting onDelete to cascade
       },
       username: {
         allowNull: false,
@@ -33,10 +34,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      // association places
-      PlaceId: {
-        type: Sequelize.UUID,
-      },
+      // // association places
+      // PlaceOwnerId: {
+      //     type: Sequelize.UUID,
+      // },
+      // // association places
+      // PlaceWriterId: {
+      //     type: Sequelize.UUID,
+      // },
+      // // association places
+      // PlaceReaderId: {
+      //     type: Sequelize.UUID,
+      // },
       // association objects
       ObjectId: {
         type: Sequelize.UUID,
@@ -44,6 +53,10 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('UsersObjects');
+    await queryInterface.dropTable('UsersPlaces');
+    await queryInterface.dropTable('UserPlacerWriter');
+    await queryInterface.dropTable('UserPlacerReader');
     await queryInterface.dropTable('Users');
   }
 };
