@@ -32,16 +32,12 @@ module.exports = (sequelize, Sequelize) => {
       PlaceId: {
           type: Sequelize.UUID,
       },
-      // association tags
-      TagId: {
-          type: Sequelize.UUID,
-      }
   });
 
       Object.associate = function (models) {
-          Object.belongsToMany(models.User, {through: 'UsersObjects'});
-          Object.belongsTo(models.Place);
-          Object.hasMany(models.Tag);
+          Object.belongsTo(models.User, {foreignKey : 'UserId'});
+          Object.belongsTo(models.Place, {foreignKey : 'PlaceId'});
+          Object.hasMany(models.Tag, {foreignKey : 'ObjectId'});
         };
 
   return Object;

@@ -34,8 +34,6 @@ module.exports = (sequelize, Sequelize) => {
 
   Tag.associate = function (models) {
       Tag.belongsToMany(models.Place, {through: 'TagsPlaces'});
-      // Tag.belongsToMany(models.Place, {through: 'TagsPlaces', foreignKey: 'PlaceId'});
-      // Tag.belongsToMany(models.Object, {through: 'TagsObjects', foreignKey: 'ObjectId'});
       Tag.belongsToMany(models.Object, {through: 'TagsObjects'});
     };
   return Tag;

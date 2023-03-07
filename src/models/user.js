@@ -10,6 +10,7 @@ module.exports = (sequelize, Sequelize) => {
           primaryKey: true,
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
+          onDelete: 'cascade', // setting onDelete to cascade
       },
       username: {
           allowNull: false,
@@ -35,18 +36,15 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false,
           type: Sequelize.DATE
       },
-      // association places
-      PlaceId: {
-          type: Sequelize.UUID,
-      },
-      // association objects
       ObjectId: {
           type: Sequelize.UUID,
       }
   });
 
   User.associate = function (models) {
-      User.hasMany(models.Place);
+      User.hasMany(models.Place, {foreignKey : 'UserId', as : 'Oplace'});
+      User.belongsToMany(models.Place, {through: 'UserPlacerWriter', as : 'Wplace'});
+      User.belongsToMany(models.Place, {through: 'UserPlacerReader', as : 'Rplace'});
       User.hasMany(models.Object);
     };
   return User;

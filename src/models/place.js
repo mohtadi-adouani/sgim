@@ -12,6 +12,7 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
+            onDelete: 'cascade', // setting onDelete to cascade
         },
         status_public : {
             type: Sequelize.BOOLEAN,
@@ -31,12 +32,9 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             type: Sequelize.DATE
         },
-        // association users
+
+        // association User
         UserId: {
-            type: Sequelize.UUID,
-        },
-        // association objects
-        ObjectId: {
             type: Sequelize.UUID,
         },
         // association tags
@@ -47,15 +45,13 @@ module.exports = (sequelize, Sequelize) => {
         parentId: {
             type: Sequelize.UUID,
         },
-        // association places (self)
-        childId: {
-            type: Sequelize.UUID,
-        }
         });
     Place.associate = function (models) {
-        Place.belongsToMany(models.User, {through: 'UsersPlaces'});
-        Place.hasMany(models.Object);
-        Place.hasMany(models.Tag);
+        Place.belongsTo(models.User, {foreignKey : 'UserId', as: 'Owner'});
+        Place.belongsToMany(models.User, {through : 'UserPlacerWriter' ,as: 'Writer'});
+        Place.belongsToMany(models.User, {through : 'UserPlacerReader' , as: 'Reader'});
+        Place.hasMany(models.Object, {foreignKey : 'PlaceId'});
+        Place.hasMany(models.Tag,{foreignKey : 'PlaceId'});
         Place.hasMany(models.Place,{foreignKey : "parentId", as: 'Child'});
         Place.belongsTo(models.Place, {foreignKey : "parentId", as: 'Parent'});
       };
