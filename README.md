@@ -94,6 +94,16 @@ migrate
   npx sequelize-cli db:migrate --env [YOUR ENV]
 ```
 
+# Seeders
+Do
+```bash
+  npx sequelize-cli db:seed:all --env [YOUR ENV] 
+```
+undo all seeds
+```bash
+  npx sequelize-cli db:seed:uno:all --env [YOUR ENV]
+```
+
 ## Tech Stack
 
 **Server:** Node, Express, TypeScript
