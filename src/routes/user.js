@@ -4,7 +4,6 @@ const router = express.Router()
 const {
      getUsers,
      getUser,
-    //createUser,
     register,
     login,
     getProfile,

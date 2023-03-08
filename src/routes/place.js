@@ -1,4 +1,6 @@
 const express = require('express')
+const auth = require('../middleware/auth');
+
 const router = express.Router()
 const {
     getPlaces,
@@ -6,17 +8,14 @@ const {
 
     } = require('../controllers/place')
 
+
 // -------------------------CUSTOM ROUTE-------------------------
 
 
 
-router.get('/',
-    getPlaces
-)
+router.get('/', auth.verifyToken,getPlaces);
 
-router.get('/:id',
-    getPlace
-)
+router.get('/:id', auth.verifyToken,getPlace);
 
 
 
