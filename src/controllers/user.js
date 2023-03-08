@@ -87,7 +87,7 @@ module.exports = {
                 user.email = user_email;
                 user.password = await bcrypt.hash(user_password, 10);
                 user.save().then(user => {
-                    return res.status(204).json({"message" : "User Updated."});
+                    return res.status(200).json({user});
                 })
             }).catch(error => {
                 return res.status(404).json({"message" : "User not found"});
@@ -97,7 +97,7 @@ module.exports = {
         }
     },
 
-    // replace user
+    // patch user
     patchUser : async (req, res) => {
         try{
             const user_id = req.params.id;
@@ -111,7 +111,7 @@ module.exports = {
                 user_email ? user.email = user_email : "";
                 user_password ? user.password = await bcrypt.hash(user_password, 10) : "";
                 user.save().then(user => {
-                    return res.status(204).json({"message" : "User Updated."});
+                    return res.status(200).json({user});
                 })
             }).catch(error => {
                 return res.status(404).json({"message" : "User not found"});

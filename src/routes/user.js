@@ -1,44 +1,34 @@
-const express = require('express')
+const express = require('express');
+const auth = require('../middleware/auth');
 const router = express.Router()
 const {
-     getAllUsers,
-     deleteAllUsers,
-     getOneUser,
-    createUser,
-    registerUser,
-    loginUser
+     getUsers,
+     getUser,
+    //createUser,
+    register,
+    login,
+    getProfile,
+    removeUser,
+    putUser,
+    patchUser,
 
     } = require('../controllers/user')
 
 // -------------------------CUSTOM ROUTE-------------------------
 
 
+// get users
+router.get('/', auth.verifyToken, getUsers);
 
-router.get('/users/',
-    getAllUsers
-)
+router.get('/:id', auth.verifyToken, getUser);
 
-router.get('/user/:id',
-    getOneUser
-)
+router.post("/register", register); // register
+router.post("/login", login); // login
 
-router.post('/user/',
-    createUser
-)
-router.delete('/removeAllUsers/',
-deleteAllUsers
-)
-
-router.post("/register/",
-// our register logic goes here...
-    registerUser
-);
-
-// Login
-router.post("/login",
-// our login logic goes here
-    loginUser
-);
+router.put('/:id', auth.verifyToken, putUser);
+router.patch('/:id', auth.verifyToken, patchUser);
+router.delete('/:id', auth.verifyToken, removeUser);
+router.get("/profile/:id", getProfile); // login
 
 
 // -------------------------EXPORT ROUTER-------------------------
