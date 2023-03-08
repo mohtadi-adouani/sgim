@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const {
-     getAllObjects,
-     getOneObject,
+    getObjects,
+    getObject,
 
     } = require('../controllers/object')
 
@@ -10,12 +10,12 @@ const {
 
 
 
-router.get('/objects/',
-    getAllObjects
+router.get('/',
+    getObjects
 )
 
-router.get('/object/:id',
-    getOneObject
+router.get('/:id',
+    getObject
 )
 
 

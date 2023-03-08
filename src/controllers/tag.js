@@ -6,7 +6,7 @@ const { Sequelize } = require('sequelize');
 module.exports = {
 
     // get all users
-    getAllTags: ( req, res ) => {
+    getTags: ( req, res ) => {
 
         Tag.findAll( {
             limit: 5
@@ -19,7 +19,7 @@ module.exports = {
         })
     },
         // get all users
-        getOneTag: ( req, res ) => {
+        getTag: ( req, res ) => {
 
             Tag.findOne( {
                 where: { id: req.params.id },

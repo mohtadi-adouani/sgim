@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const {
-     getAllTags,
-     getOneTag,
+     getTags,
+     getTag,
 
     } = require('../controllers/tag')
 
@@ -10,12 +10,12 @@ const {
 
 
 
-router.get('/tags/',
-    getAllTags
+router.get('/',
+    getTags
 )
 
-router.get('/tag/:id',
-    getOneTag
+router.get('/:id',
+    getTag
 )
 
 

@@ -6,7 +6,7 @@ const { Sequelize } = require('sequelize');
 module.exports = {
 
     // get all users
-    getAllObjects: ( req, res ) => {
+    getObjects: ( req, res ) => {
 
         Object.findAll( {
             limit: 5
@@ -19,7 +19,7 @@ module.exports = {
         })
     },
         // get all users
-        getOneObject: ( req, res ) => {
+        getObject: ( req, res ) => {
 
             Place.findOne( {
                 where: { id: req.params.id },

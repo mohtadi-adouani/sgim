@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const {
-     getAllPlaces,
-     getOnePlace,
+    getPlaces,
+    getPlace,
 
     } = require('../controllers/place')
 
@@ -10,12 +10,12 @@ const {
 
 
 
-router.get('/places/',
-    getAllPlaces
+router.get('/',
+    getPlaces
 )
 
-router.get('/place/:id',
-    getOnePlace
+router.get('/:id',
+    getPlace
 )
 
 
