@@ -21,12 +21,12 @@ module.exports = {
         // get all users
         getObject: ( req, res ) => {
 
-            Place.findOne( {
+            Object.findOne( {
                 where: { id: req.params.id },
                 attributes : ["id", "status_public","name", "description", "createdAt", "updatedAt", "UserId", "PlaceId"],
                 include: [ {model : Tag, attributes : ['id', 'name']},
-                    { model : User, as : 'Writer', attributes : ['id', 'username']},
-                    { model : User, as : 'Reader', attributes : ['id', 'username']}]
+                     { model : User, as : 'Writer', attributes : ['id', 'username']},
+                     { model : User, as : 'Reader', attributes : ['id', 'username']}]
             }).then(object => {
                 return res.status(200).json({
                     object

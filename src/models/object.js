@@ -39,11 +39,11 @@ module.exports = (sequelize, Sequelize) => {
   });
 
       Object.associate = function (models) {
-          Object.belongsTo(models.User, {foreignKey : 'UserId'});
+          Object.belongsTo(models.User, {foreignKey : 'UserId', as : 'Owner'});
           Object.belongsToMany(models.User, {through: 'UserObjectWriter', as : 'Writer'});
           Object.belongsToMany(models.User, {through: 'UserObjectReader', as : 'Reader'});
 
-          Object.belongsTo(models.Place, {foreignKey : 'PlaceId', as : 'Place'});
+          Object.belongsTo(models.Place, {foreignKey : 'PlaceId'});
 
           Object.belongsToMany(models.Tag, {through : 'TagsObjects'});
         };
