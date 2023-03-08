@@ -55,7 +55,7 @@ module.exports = {
         const user_id = req.params.id;
 
         if (!user_id) {
-            res.status(400).send("All input is required");
+            return res.status(400).send("All input is required");
         }
             await User.findByPk(user_id).then(user => {
                 if(! user){ return res.status(404).json({ message: "User not exist." });}
@@ -68,6 +68,57 @@ module.exports = {
                 return res.status(500).json({ message : error })
             });
 
+    },
+
+    // replace user
+    putUser : async (req, res) => {
+        try{
+            const user_id = req.params.id;
+            const user_username = req.body.username;
+            const user_email = req.body.email;
+            const user_password = req.body.password;
+
+            if (!(user_id && user_username && user_email && user_password)) {
+                return res.status(400).send("All input is required");
+            }
+
+            await User.findByPk(user_id).then(async user => {
+                user.username = user_username;
+                user.email = user_email;
+                user.password = await bcrypt.hash(user_password, 10);
+                user.save().then(user => {
+                    return res.status(204).json({"message" : "User Updated."});
+                })
+            }).catch(error => {
+                return res.status(404).json({"message" : "User not found"});
+            });
+        } catch (error) {
+            return res.status(500).json({"message" : error});
+        }
+    },
+
+    // replace user
+    patchUser : async (req, res) => {
+        try{
+            const user_id = req.params.id;
+            const user_username = req.body.username;
+            const user_email = req.body.email;
+            const user_password = req.body.password;
+
+
+            await User.findByPk(user_id).then(async user => {
+                user_username ? user.username = user_username : "";
+                user_email ? user.email = user_email : "";
+                user_password ? user.password = await bcrypt.hash(user_password, 10) : "";
+                user.save().then(user => {
+                    return res.status(204).json({"message" : "User Updated."});
+                })
+            }).catch(error => {
+                return res.status(404).json({"message" : "User not found"});
+            });
+        } catch (error) {
+            return res.status(500).json({"message" : error});
+        }
     },
 
 
