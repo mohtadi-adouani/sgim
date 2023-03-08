@@ -14,3 +14,9 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
       - "8080:80"
+  node:
+    image: mad/node-app
+    ports:
+      - "3000:3000"
+      - "4000:4000"
+      - "5000:5000"

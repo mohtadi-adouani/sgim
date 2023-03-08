@@ -10,7 +10,7 @@ environments.development = {
     "username": "admin",
     "password": "admin",
     "database": "sgim_db_dev",
-    "host": "127.0.0.1",
+    "host": "sgim_db",
     "dialect": "postgres",
 
     // jws secret key to sign tokens
@@ -25,7 +25,7 @@ environments.production = {
     "username": "admin",
     "password": "admin",
     "database": "sgim_db_prod",
-    "host": "127.0.0.1",
+    "host": "sgim_db",
     "dialect": "postgres",
 
     // jws secret key to sign tokens
@@ -40,7 +40,7 @@ environments.test = {
     "username": "admin",
     "password": "admin",
     "database": "sgim_db_test",
-    "host": "127.0.0.1",
+    "host": "sgim_db",
     "dialect": "postgres",
 
     // jws secret key to sign tokens
