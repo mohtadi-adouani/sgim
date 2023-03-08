@@ -14,21 +14,50 @@ This project aims to implement a home inventory management system
 # Required 
 **Docker compose:** [Docker](https://www.docker.com/)
 
-**Node js 12.0.0 >= :** [Nodejs](https://nodejs.org/)
 
     
 # Download and install
 
 Clone the project
-
 ```bash
   git clone https://gitlab.isima.fr/easow/sgim
 ```
-
 Go to the project directory
-
 ```bash
   cd sgim
+```
+Build Dockerfile
+```bash
+  docker compose build
+```
+Run
+```bash
+  docker compose up
+```
+Stop
+```bash
+  docker compose down
+```
+Now you can test your API.
+
+
+
+
+
+
+
+## Migration [only for developers]
+undo last migration
+```bash
+  npx sequelize-cli db:migrate:undo --env [YOUR ENV] 
+```
+undo all migration
+```bash
+  npx sequelize-cli db:migrate:undo:all --env [YOUR ENV]
+```
+migrate
+```bash
+  npx sequelize-cli db:migrate --env [YOUR ENV]
 ```
 
 Install dependencies
@@ -62,39 +91,7 @@ Undo and do migration
    # do test migration
    npx sequelize-cli db:migrate --env test
 ```
-
-# Run 
-Start docker
-
-```bash
-  docker compose up -d
-```
-
-Start the server production
-
-```bash
-  npm run start:production
-  # or development
-  npm run start:development
-```
-
-
-
-# Migration
-undo last migration
-```bash
-  npx sequelize-cli db:migrate:undo --env [YOUR ENV] 
-```
-undo all migration
-```bash
-  npx sequelize-cli db:migrate:undo:all --env [YOUR ENV]
-```
-migrate
-```bash
-  npx sequelize-cli db:migrate --env [YOUR ENV]
-```
-
-# Seeders
+## Seeders [only for developers]
 Do
 ```bash
   npx sequelize-cli db:seed:all --env [YOUR ENV] 
