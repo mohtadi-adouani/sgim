@@ -45,7 +45,9 @@ module.exports = (sequelize, Sequelize) => {
       User.hasMany(models.Place, {foreignKey : 'UserId', as : 'Oplace'});
       User.belongsToMany(models.Place, {through: 'UserPlacerWriter', as : 'Wplace'});
       User.belongsToMany(models.Place, {through: 'UserPlacerReader', as : 'Rplace'});
-      User.hasMany(models.Object);
+      User.belongsToMany(models.Object, {through: 'UserObjectWriter', as : 'Wobject'});
+      User.belongsToMany(models.Object, {through: 'UserObjectReader', as : 'Robject'});
+      User.hasMany(models.Object, {foreignKey : 'UserId', as : 'Oobject'});
     };
   return User;
 };

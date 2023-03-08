@@ -57,6 +57,8 @@ module.exports = {
     await queryInterface.dropTable('UsersPlaces');
     await queryInterface.dropTable('UserPlacerWriter');
     await queryInterface.dropTable('UserPlacerReader');
+    await queryInterface.dropTable('UserObjectReader');
+    await queryInterface.dropTable('UserObjectWriter');
     await queryInterface.dropTable('Users');
   }
 };

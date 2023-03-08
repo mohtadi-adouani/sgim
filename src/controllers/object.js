@@ -9,7 +9,7 @@ module.exports = {
     getObjects: ( req, res ) => {
 
         Object.findAll( {
-            limit: 5
+            attributes: ["id", "name"],
         }).then(objects => {
             return res.status(200).json({
                 objects
@@ -23,7 +23,8 @@ module.exports = {
 
             Place.findOne( {
                 where: { id: req.params.id },
-                include: [ Tag ]
+                attributes : ["id", "status_public","name", "description", "createdAt", "updatedAt", "UserId", "PlaceId"],
+                include: [ {model : Tag, attributes : ['id', 'name']} ]
             }).then(object => {
                 return res.status(200).json({
                     object

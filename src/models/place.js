@@ -50,8 +50,10 @@ module.exports = (sequelize, Sequelize) => {
         Place.belongsTo(models.User, {foreignKey : 'UserId', as: 'Owner'});
         Place.belongsToMany(models.User, {through : 'UserPlacerWriter' ,as: 'Writer'});
         Place.belongsToMany(models.User, {through : 'UserPlacerReader' , as: 'Reader'});
+
         Place.hasMany(models.Object, {foreignKey : 'PlaceId'});
-        Place.hasMany(models.Tag,{foreignKey : 'PlaceId'});
+        Place.belongsToMany(models.Tag,{through : 'TagsPlaces'});
+
         Place.hasMany(models.Place,{foreignKey : "parentId", as: 'Child'});
         Place.belongsTo(models.Place, {foreignKey : "parentId", as: 'Parent'});
       };

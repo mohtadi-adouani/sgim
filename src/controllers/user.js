@@ -14,7 +14,6 @@ module.exports = {
 
         User.findAll( {
             attributes : ['id','username'],
-            limit: 5
         }).then(users => {
             return res.status(200).json({
                 users
@@ -29,7 +28,12 @@ module.exports = {
         User.findOne( {
             where: { id: req.params.id },
             attributes : {exclude: ['password']},
-            include: [ Place, Object ]
+            include: [ {model : Place, as : 'Oplace', attributes : ['id']},
+                {model : Place, as : 'Wplace', attributes : ['id']},
+                {model : Place, as : 'Rplace', attributes : ['id']},
+                {model : Object, as : 'Oobject', attributes : ['id']},
+                {model : Object, as : 'Wobject', attributes : ['id']},
+                {model : Object, as : 'Robject', attributes : ['id']}]
         }).then(user => {
             return res.status(200).json({
                 user

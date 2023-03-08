@@ -9,7 +9,7 @@ module.exports = {
     getTags: ( req, res ) => {
 
         Tag.findAll( {
-            limit: 5
+            attributes : ['id', 'name'],
         }).then(tags => {
             return res.status(200).json({
                 tags
@@ -23,9 +23,11 @@ module.exports = {
 
             Tag.findOne( {
                 where: { id: req.params.id },
+                attributes : {exclude : ['ObjectId', 'PlaceId']},
+                include : [{model : Object, attributes : ['id']}, {model : Place, attributes : ['id']}]
             }).then(tag => {
                 return res.status(200).json({
-                    tags
+                    tag
                 })
             }).catch(err => {
                 return res.status(400).json({err})

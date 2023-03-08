@@ -16,6 +16,10 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      status_public : {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -41,6 +45,9 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('TagsObjects');
     await queryInterface.dropTable('UsersObjects');
+
+    await queryInterface.dropTable('UserObjectReader');
+    await queryInterface.dropTable('UserObjectWriter');
     await queryInterface.dropTable('Objects');
   }
 };

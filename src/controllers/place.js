@@ -10,7 +10,7 @@ module.exports = {
     getPlaces: ( req, res ) => {
 
         Place.findAll( {
-            limit: 5
+            attributes : ['id','name','description'],
         }).then(places => {
             return res.status(200).json({
                 places
@@ -19,20 +19,21 @@ module.exports = {
             return res.status(400).json({err})
         })
     },
-        // get all users
-        getPlace: ( req, res ) => {
+    // get all users
+    getPlace: ( req, res ) => {
 
-            Place.findOne( {
-                where: { id: req.params.id },
-                include: [ Tag ],
-            }).then(place => {
-                return res.status(200).json({
-                    place
-                })
-            }).catch(err => {
-                return res.status(400).json({err})
+        Place.findOne( {
+            where: { id: req.params.id },
+            attributes : ["id", "status_public","name", "description", "createdAt", "updatedAt", "UserId", "parentId"],
+            include: [{model : Tag, attributes : ['id', 'name']}, {model : Object, attributes : ['id', 'name']}, { model : Place, as : 'Child', attributes : ['id', 'name']} ],
+        }).then(place => {
+            return res.status(200).json({
+                place
             })
-        },
+        }).catch(err => {
+            return res.status(400).json({err})
+        })
+    },
 
 
 

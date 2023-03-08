@@ -16,6 +16,10 @@ module.exports = (sequelize, Sequelize) => {
       description: {
           type: Sequelize.STRING
       },
+      status_public : {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+      },
       createdAt: {
           allowNull: false,
           type: Sequelize.DATE
@@ -36,8 +40,12 @@ module.exports = (sequelize, Sequelize) => {
 
       Object.associate = function (models) {
           Object.belongsTo(models.User, {foreignKey : 'UserId'});
-          Object.belongsTo(models.Place, {foreignKey : 'PlaceId'});
-          Object.hasMany(models.Tag, {foreignKey : 'ObjectId'});
+          Object.belongsToMany(models.User, {through: 'UserObjectWriter', as : 'Writer'});
+          Object.belongsToMany(models.User, {through: 'UserObjectReader', as : 'Reader'});
+
+          Object.belongsTo(models.Place, {foreignKey : 'PlaceId', as : 'Place'});
+
+          Object.belongsToMany(models.Tag, {through : 'TagsObjects'});
         };
 
   return Object;

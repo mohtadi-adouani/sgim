@@ -47,8 +47,13 @@ module.exports = {
             let lieu = await Place.create({
               name: names_publics[i],
               description: desc_publics[i],
+                status_public : true
             });
             lieu.setParent(maison);
+            lieu.setReader(mohtadi_user);
+            lieu.setReader(amine_user);
+            lieu.setWriter(mohtadi_user);
+            lieu.setWriter(amine_user);
           }
 
             // users room
@@ -57,7 +62,7 @@ module.exports = {
             for (const user of users) {
                 let room = await Place.create({
                   name: 'Chambre de ' + user.username,
-                  description: 'Chambre de ' + user.username + ' , étage  : ' + i % 2
+                  description: 'Chambre de ' + user.username + ' , étage  : ' + i % 2,
                 });
                 i++
                 // set room in the house
@@ -67,14 +72,17 @@ module.exports = {
           }
 
             let room_tag = await Tag.create({ name : "Room" });
-            for (const room of roomes) {
+            let tech_tag = await Tag.create({ name : "Tech" });
+            for (let room of roomes) {
                 let owner = await room.getOwner();
                 await room.addTag(room_tag);
                 let placard = await Place.create({ name : "Placard de "+owner.username})
                 await placard.setOwner(owner);
+                await placard.setParent(room);
                  let mobile = await Object.create({ name : "Mobile de "+owner.username})
                 await mobile.setUser(owner);
                  await mobile.setPlace(placard);
+                 await mobile.addTag(tech_tag);
           }
   },
 
