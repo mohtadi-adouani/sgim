@@ -79,10 +79,10 @@ module.exports = {
                 let placard = await Place.create({ name : "Placard de "+owner.username})
                 await placard.setOwner(owner);
                 await placard.setParent(room);
-                 let mobile = await Object.create({ name : "Mobile de "+owner.username})
+                let mobile = await Object.create({ name : "Mobile de "+owner.username})
                 await mobile.setUser(owner);
-                 await mobile.setPlace(placard);
-                 await mobile.addTag(tech_tag);
+                await mobile.setPlace(placard);
+                await mobile.addTag(tech_tag);
           }
   },
 
