@@ -4,49 +4,13 @@ const Object = require('../models').Object
 const { Sequelize } = require('sequelize');
 const bcrypt = require("bcrypt");
 const jwtUtils = require("../utils/jwt.utils");
+const {user} = require("pg/lib/native");
 
 module.exports = {
 
-    // add user
-    createUser: async (req, res) => {
-        const user1 = await User.create({
-            username: 'Mohtadi',
-            email: 'Mohtadi@isiam.fr',
-            password: 'test password',
-        });
 
-        const cuisine = await Place.create({
-            name: 'Cuisine'
-        });
-        const frigo = await Place.create({
-            name: 'Frigo'
-        });
-        const placard = await Place.create({
-            name: 'placard'
-        });
-        const fourchette = await Object.create({
-            name: 'frouchette'
-        });
-        const cuillere = await Object.create({
-            name: 'cuillere'
-        });
-
-        placard.setParent(cuisine);
-        frigo.setParent(cuisine);
-
-        fourchette.setPlace(placard);
-        cuillere.setPlace(placard);
-
-        placard.addObject(fourchette);
-        placard.addObject(cuillere);
-
-
-        return res.status(200).json({
-            user1
-        })
-    },
     // get all users
-    getAllUsers: ( req, res ) => {
+    getUsers: ( req, res ) => {
 
         User.findAll( {
             attributes : ['id','username'],
@@ -59,41 +23,57 @@ module.exports = {
             return res.status(400).json({err})
         })
     },
-        // get all users
-        getOneUser: ( req, res ) => {
-            User.findOne( {
-                where: { id: req.params.id },
-                attributes : {exclude: ['password']},
-                include: [ Place, Object ]
-            }).then(user => {
-                return res.status(200).json({
-                    user
-                })
-            }).catch(err => {
-                return res.status(400).json({err})
-            })
-        },
 
-
-
-    // delete all users
-
-    deleteAllUsers: (req, res) => {
-        User.destroy({
-            truncate: true
-          }).then(() => {
+    // get all users
+    getUser: ( req, res ) => {
+        User.findOne( {
+            where: { id: req.params.id },
+            attributes : {exclude: ['password']},
+            include: [ Place, Object ]
+        }).then(user => {
             return res.status(200).json({
-                success: true,
-                "message": "All Users deleted"
+                user
             })
-          }).catch(err => {
-              return res.status(400).json({
-                  err
-              })
-          })
-},
+        }).catch(err => {
+            return res.status(400).json({err})
+        })
+    },
 
-registerUser : async (req, res) => {
+    getProfile : async (req, res) => {
+        const wanted_user_id = req.params.id;
+
+        const wanted_user = await User.findByPk(wanted_user_id);
+        if (wanted_user){
+            res.status(200).json({ "wanted_user" : wanted_user });
+        }
+        else{
+            res.status(400).json({ "wanted_user" : "Not found" });
+        }
+    },
+
+    removeUser : async (req, res) => {
+        const user_id = req.params.id;
+
+        if (!user_id) {
+            res.status(400).send("All input is required");
+        }
+            await User.findByPk(user_id).then(user => {
+                if(! user){ return res.status(404).json({ message: "User not exist." });}
+                User.destroy({where: { id: user_id }}).then( succes => {
+                    return res.status(200).json({ message: "User deleted." });
+                }).catch( error => {
+                    return res.status(500).json({ message : error })
+                })
+            }).catch(error => {
+                return res.status(500).json({ message : error })
+            });
+
+    },
+
+
+
+    // register
+    register : async (req, res) => {
     // Our register logic starts here
     try {
         // Get user input
@@ -135,7 +115,7 @@ registerUser : async (req, res) => {
     }
     },
     // Our login logic starts here
-    loginUser : async (req, res) => {
+    login : async (req, res) => {
         try {
         // Get user input
         const { email, password } = req.body;
