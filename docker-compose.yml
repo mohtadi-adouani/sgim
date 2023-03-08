@@ -16,7 +16,12 @@ services:
       - "8080:80"
   node:
     image: mad/node-app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
       - "4000:4000"
       - "5000:5000"
+    depends_on:
+      - sgim_db
