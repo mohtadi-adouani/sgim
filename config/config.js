@@ -10,7 +10,7 @@ environments.development = {
     "username": "admin",
     "password": "admin",
     "database": "sgim_db_dev",
-    "host": "sgim_db",
+    "host": "localhost",
     "dialect": "postgres",
 
     // jws secret key to sign tokens

@@ -605,11 +605,9 @@ module.exports = {
     // recherche ---------------------------
     getPlaceByName : async (req, res) => {
         try {
-            let p_name = req.params.name;
-            let p_tag = req.params.tag;
+            let p_name = req.query.name;
 
-            if(!p_name){p_name = '';}
-            if(!p_tag){p_tag = '';}
+            if(! p_name ){p_name = '';}
 
             await User.findByPk(req.user.userId).then(async user => {
 
@@ -618,28 +616,54 @@ module.exports = {
                 }
 
                 await Place.findAll({
-                    include: [{
-                        model: Tag,
-                        through :{
-                            where : {
-                                name : {
-                                    [op.like] : '%'+p_tag+'%'
-                                }
-                            }
-                        }
-                    }],
                     where : {
                         name : {
                             [op.like] : '%'+p_name+'%'
                         },
                     },
-                    attributes : ['id','name']
+                    attributes : ['id']
                 }).then(places => {
                     return res.status(200).json({places})
                 });
             })
         } catch (error) {
             return res.status(500).json(error); //send("Error server");
+        }
+    },
+    getPlaceByTag : async (req, res) => {
+        try {
+            let p_tag = req.query.tag;
+
+            if(! p_tag ){p_tag = '';}
+
+            await User.findByPk(req.user.userId).then(async user => {
+
+                if (user === null) {
+                    return res.status(401).send("User not Unauthorized login please.");
+                }
+
+                await Tag.findAll({
+                    where : {
+                        name : {
+                            [op.like] : '%'+p_tag+'%'
+                        },
+                    },
+                }).then(async tags => {
+                    let arrayPlaces = Array();
+                    for (const tag of tags) {
+                        await tag.getPlaces().then(places => {
+                            places.forEach( place => {
+                                if(! arrayPlaces.includes(place) ){
+                                    arrayPlaces.push(place)
+                                }
+                            })
+                        })
+                    }
+                    return res.status(200).json({arrayPlaces})
+                });
+            })
+        } catch (error) {
+            return res.status(500).send("Error server");
         }
     }
 

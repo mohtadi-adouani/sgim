@@ -20,6 +20,6 @@ EXPOSE 4000
 EXPOSE 5000
 CMD [ "npx", "sequelize-cli", "db:migrate:undo:all" ]
 CMD [ "npx", "sequelize-cli", "db:migrate:all" ]
-CMD [ "npm", "run", "start:development" ]
+#CMD [ "npx", "sequelize-cli", "db:seed:undo:all" ]
 CMD [ "npx", "sequelize-cli", "db:seed:all" ]
 CMD [ "npm", "run", "start:development" ]

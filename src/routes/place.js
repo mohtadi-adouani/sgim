@@ -12,7 +12,7 @@ const {
 
     // Recherche
     getPlaceByName,
-    //getPlaceByTag,
+    getPlaceByTag,
 
     // authorization
     auth_read_place,
@@ -24,7 +24,8 @@ const {
 // -------------------------CUSTOM ROUTE-------------------------
 
 // recherche
-router.get('/find', auth.verifyToken, getPlaceByName);
+router.get('/findbyname', auth.verifyToken, getPlaceByName);
+router.get('/findbytag', auth.verifyToken, getPlaceByTag);
 
 
 // classic routes
