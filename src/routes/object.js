@@ -16,7 +16,10 @@ router.get('/', getObjects)
 
 router.get('/:id', getObject)
 
-router.put('/:id', auth.verifyToken,auth.auth_update_object,getObject)
+//router.put('/:id', auth.verifyToken,getObject)
+//router.patch('/:id', auth.verifyToken,getObject)
+//router.delete('/:id', auth.verifyToken,getObject)
+//router.post('/:id', auth.verifyToken,getObject)
 
 
 

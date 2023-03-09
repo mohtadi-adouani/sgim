@@ -35,6 +35,9 @@ module.exports = {
                 {model : Object, as : 'Wobject', attributes : ['id']},
                 {model : Object, as : 'Robject', attributes : ['id']}]
         }).then(user => {
+            if(user === null ){
+                return res.status(404).send("User not found")
+            }
             return res.status(200).json({
                 user
             })

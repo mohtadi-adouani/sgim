@@ -28,6 +28,9 @@ module.exports = {
                      { model : User, as : 'Writer', attributes : ['id', 'username']},
                      { model : User, as : 'Reader', attributes : ['id', 'username']}]
             }).then(object => {
+                if(object === null ){
+                    return res.status(404).send("Object not found")
+                }
                 return res.status(200).json({
                     object
                 })

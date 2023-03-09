@@ -26,6 +26,9 @@ module.exports = {
                 attributes : {exclude : ['ObjectId', 'PlaceId']},
                 include : [{model : Object, attributes : ['id']}, {model : Place, attributes : ['id']}]
             }).then(tag => {
+                if(tag === null ){
+                    return res.status(404).send("Tag not found")
+                }
                 return res.status(200).json({
                     tag
                 })
