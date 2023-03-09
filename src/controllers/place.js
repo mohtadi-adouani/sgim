@@ -3,6 +3,8 @@ const Place = require('../models').Place
 const Object = require('../models').Object
 const Tag = require('../models').Tag
 
+const Sequelize = require('sequelize');
+const op = Sequelize.Op;
 module.exports = {
 
     // get all users
@@ -598,6 +600,48 @@ module.exports = {
             return res.status(500).send("Error server")
         }
     },
+
+
+    // recherche ---------------------------
+    getPlaceByName : async (req, res) => {
+        try {
+            let p_name = req.params.name;
+            let p_tag = req.params.tag;
+
+            if(!p_name){p_name = '';}
+            if(!p_tag){p_tag = '';}
+
+            await User.findByPk(req.user.userId).then(async user => {
+
+                if (user === null) {
+                    return res.status(401).send("User not Unauthorized login please.");
+                }
+
+                await Place.findAll({
+                    include: [{
+                        model: Tag,
+                        through :{
+                            where : {
+                                name : {
+                                    [op.like] : '%'+p_tag+'%'
+                                }
+                            }
+                        }
+                    }],
+                    where : {
+                        name : {
+                            [op.like] : '%'+p_name+'%'
+                        },
+                    },
+                    attributes : ['id','name']
+                }).then(places => {
+                    return res.status(200).json({places})
+                });
+            })
+        } catch (error) {
+            return res.status(500).json(error); //send("Error server");
+        }
+    }
 
 
 
