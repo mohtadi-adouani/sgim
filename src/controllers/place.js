@@ -648,13 +648,14 @@ module.exports = {
                             [op.like] : '%'+p_tag+'%'
                         },
                     },
+                    attributes : ['id']
                 }).then(async tags => {
                     let arrayPlaces = Array();
                     for (const tag of tags) {
                         await tag.getPlaces().then(places => {
                             places.forEach( place => {
                                 if(! arrayPlaces.includes(place) ){
-                                    arrayPlaces.push(place)
+                                    arrayPlaces.push({'id' : place.id})
                                 }
                             })
                         })
