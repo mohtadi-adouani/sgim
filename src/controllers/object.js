@@ -19,26 +19,40 @@ module.exports = {
             return res.status(400).json({err})
         })
     },
-        // get all users
-        getObject: ( req, res ) => {
-
-            Object.findOne( {
-                where: { id: req.params.id },
-                attributes : ["id", "status_public","name", "description", "createdAt", "updatedAt", "UserId", "PlaceId"],
-                include: [ {model : Tag, attributes : ['id', 'name']},
-                     { model : User, as : 'Writer', attributes : ['id', 'username']},
-                     { model : User, as : 'Reader', attributes : ['id', 'username']}]
+    // get all users
+    getObject: ( req, res ) => {
+        try {
+            Object.findOne({
+                where: {id: req.params.id},
+                attributes: ["id", "status_public", "name", "description", "createdAt", "updatedAt", "UserId", "PlaceId"],
+                include: [{model: Tag, attributes: ['id', 'name']},
+                    {model: User, as: 'Writer', attributes: ['id', 'username']},
+                    {model: User, as: 'Reader', attributes: ['id', 'username']}]
             }).then(object => {
-                if(object === null ){
+                if (object === null) {
                     return res.status(404).send("Object not found")
                 }
                 return res.status(200).json({
                     object
                 })
-            }).catch(err => {
-                return res.status(400).json({err})
             })
-        },
+        }catch (error){
+            return res.status(500).send(error)
+        }
+    },
+
+    // remove place
+    removeObject: async (req, res) => {
+        try{
+            await Object.findByPk(req.params.id).then(object =>{
+                object.destroy()
+                return res.status(204).send("deleted.")
+            })
+        }catch (error){
+            return res.status(500).send("Error server")
+        }
+
+    },
 
     // verify if user can read (get) place
     auth_read_object: async (req, res, next) => {
@@ -51,16 +65,18 @@ module.exports = {
                     if(user === null ){
                         return res.status(401).send("User not Unauthorized login please.");
                     }
-                    if( object.status_public || user.isAdmin ||await object.getOwner().id == user.id || await object.hasReader(user) || await object.hasWriter(user)){
+                    if( object.status_public || user.isAdmin || (await object.getOwner()).id == user.id || await object.hasReader(user) || await object.hasWriter(user)){
                         next();
                     }
                     else{
                         return res.status(403).send("Forbidden :  you are nor authorized to read this object");
                     }
-                })
-            })
-        }catch (error) {
-            return res.status(500).send("Error server")
+                }).catch(error => {
+                    return res.status(501).json(error);
+                });
+            });
+        }catch(error) {
+            return res.status(500).send("Error servers")
         }
     },
     // verify if user can read (put,patch, delete) place
@@ -74,10 +90,10 @@ module.exports = {
                     if (user === null) {
                         return res.status(401).send("User not Unauthorized login please.");
                     }
-                    if (object.status_public || user.isAdmin || await object.getOwner().id == user.id || await object.hasWriter(user)) {
+                    if (user.isAdmin || (await object.getOwner()).id == user.id || await object.hasWriter(user)) {
                         next();
                     } else {
-                        return res.status(403).send("Forbidden :  you are nor authorized to read this object");
+                        return res.status(403).send("Forbidden :  you are nor authorized to write this object");
                     }
                 })
             })

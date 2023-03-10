@@ -5,6 +5,7 @@ const router = express.Router()
 const {
     getObjects,
     getObject,
+    removeObject,
 
     // authorization
     auth_read_object,
@@ -24,12 +25,13 @@ router.get('/findbytag', auth.verifyToken, getObjectByTag)
 
 
 router.get('/', getObjects)
-router.get('/:id', auth_read_object, getObject)
+router.get('/:id', auth.verifyToken, auth_read_object, getObject)
 
-//router.put('/:id', auth.verifyToken,getObject)
-//router.patch('/:id', auth.verifyToken,getObject)
-//router.delete('/:id', auth.verifyToken,getObject)
-//router.post('/:id', auth.verifyToken,getObject)
+router.delete('/:id', auth.verifyToken,auth_write_object, removeObject)
+
+//router.put('/:id', auth.verifyToken,auth_write_object,putObject)
+//router.patch('/:id', auth.verifyToken,auth_write_object,patchObject)
+//router.post('/:id', auth.verifyToken,auth_write_object,createObject)
 
 
 
