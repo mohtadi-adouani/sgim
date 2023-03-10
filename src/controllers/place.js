@@ -607,7 +607,7 @@ module.exports = {
         try {
             let p_name = req.query.name;
 
-            if(! p_name ){p_name = '';}
+            if(! p_name ){return res.status(422).send("name is required.");}
 
             await User.findByPk(req.user.userId).then(async user => {
 
@@ -634,7 +634,7 @@ module.exports = {
         try {
             let p_tag = req.query.tag;
 
-            if(! p_tag ){p_tag = '';}
+            if(! p_tag ){return res.status(422).send("tag is required.");}
 
             await User.findByPk(req.user.userId).then(async user => {
 
