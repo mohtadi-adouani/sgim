@@ -7,13 +7,12 @@ const process = require('process');
 const basename = path.basename(__filename);
 const config = require(__dirname + '/../../config/config');
 const db = {};
-
 //console.log(config[env]);
 let sequelize = new Sequelize(config.database,
-                          config.username,
-                          config.password,
-                          { host : config.host,
-                            dialect : config.dialect
+                          config.env.username,
+                          config.env.password,
+                          { host : config.env.host,
+                            dialect : config.env.dialect
                           });
 
 
