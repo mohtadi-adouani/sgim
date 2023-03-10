@@ -444,6 +444,8 @@ module.exports = {
                 await object.save();
                 return res.status(201).json({'id' : object.id});
             });
+        }).catch(error => {
+            return res.status(500).send("Error server")
         });
     },
     // remove place
