@@ -589,7 +589,7 @@ module.exports = {
                     if (user === null) {
                         return res.status(401).send("User not Unauthorized login please.");
                     }
-                    if (place.status_public || user.isAdmin || await place.getOwner().id == user.id || await place.hasWriter(user)) {
+                    if (user.isAdmin || await place.getOwner().id == user.id || await place.hasWriter(user)) {
                         next();
                     } else {
                         return res.status(403).send("Forbidden :  you are nor authorized to read this place");
