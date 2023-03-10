@@ -27,7 +27,7 @@ module.exports = {
     getUser: ( req, res ) => {
         User.findOne( {
             where: { id: req.params.id },
-            attributes : {exclude: ['password']},
+            attributes : {exclude: ['password', 'ObjectId']},
             include: [ {model : Place, as : 'Oplace', attributes : ['id']},
                 {model : Place, as : 'Wplace', attributes : ['id']},
                 {model : Place, as : 'Rplace', attributes : ['id']},
@@ -50,6 +50,9 @@ module.exports = {
         const wanted_user_id = req.params.id;
 
         const wanted_user = await User.findByPk(wanted_user_id);
+        if(wanted_user === null ){
+            return res.status(404).send("User not found")
+        }
         if (wanted_user){
             res.status(200).json({ "wanted_user" : wanted_user });
         }
@@ -197,6 +200,53 @@ module.exports = {
         console.log(err);
     }
     // Our register logic ends here
-    }
+    },
+
+    // verify if user can read (get) user
+    auth_read_user: async (req, res, next) => {
+        try {
+            await User.findByPk(req.params.id).then(async user => {
+                if(user === null ){
+                    return res.status(404).send("User not found");
+                }
+                await User.findByPk(req.user.userId).then(async req_user => {
+                    if(req_user === null ){
+                        return res.status(401).send("User not Unauthorized login please.");
+                    }
+                    if( req_user.isAdmin || req_user.id == user.id){
+                        next();
+                    }
+                    else{
+                        return res.status(403).send("Forbidden :  you are nor authorized to read this user");
+                    }
+                })
+            })
+        }catch (error) {
+            return res.status(500).send("Error server")
+        }
+    },
+    // verify if user can write
+    auth_write_user: async (req, res, next) => {
+        try {
+            await User.findByPk(req.params.id).then(async user => {
+                if(user === null ){
+                    return res.status(404).send("User not found");
+                }
+                await User.findByPk(req.user.userId).then(async req_user => {
+                    if(req_user === null ){
+                        return res.status(401).send("User not Unauthorized login please.");
+                    }
+                    if( req_user.isAdmin || req_user.id == user.id){
+                        next();
+                    }
+                    else{
+                        return res.status(403).send("Forbidden :  you are nor authorized to write this user");
+                    }
+                })
+            })
+        }catch (error) {
+            return res.status(500).send("Error server")
+        }
+    },
 
 }
