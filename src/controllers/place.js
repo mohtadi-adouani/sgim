@@ -659,7 +659,7 @@ module.exports = {
                             })
                         })
                     }
-                    return res.status(200).json({arrayPlaces})
+                    return res.status(200).json({'places' :arrayPlaces})
                 });
             })
         } catch (error) {
