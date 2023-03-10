@@ -362,6 +362,90 @@ module.exports = {
         }
     },
 
+    // post object
+    postObject: async (req, res) => {
+        const name = req.body.name;
+        const description = req.body.description;
+        const status_public = req.body.status_public;
+        const placeId = req.body.placeId;
+        let tags = req.body.tags;
+
+        if (!name) {
+            return res.status(422).send("Missing argument : name required.");
+        }
+
+        await User.findByPk(req.user.userId).then(async user => {
+            await Object.create({ name : name }).then(async object => {
+                await object.setOwner(user);
+                if (description) {
+                    object.description = description;
+                }
+                if (status_public) {
+                    if((String(status_public) == 'true' || String(status_public) == 'false')){
+                        object.status_public = status_public;
+                    }
+                    else{
+                        await object.destroy()
+                        return res.status(422).send("status public must be true or false");
+                    }
+
+                }
+                if (tags) {
+                    try{
+                        tags = JSON.parse(tags)
+                    } catch(error){
+                        await object.destroy()
+                        return res.status(422).send('Tags must be like ["tag1","tag2"] ');
+                    }
+
+                    if (Array.isArray(tags)) {
+                        for (const tag of tags) {
+                            await Tag.findOrCreate({
+                                where: {
+                                    name: String(tag),
+                                }
+                            }).then( async return_creation => {
+                                let new_tag = return_creation[0]
+                                let created = return_creation[1]
+                                await object.addTag(new_tag)
+                            })
+                        }
+                    } else if (typeof (tags) == 'string') {
+                        await Tag.findOrCreate({
+                            where: {
+                                name: tags
+                            }
+                        }).then( async return_creation => {
+                            let new_tag = return_creation[0]
+                            let created = return_creation[1]
+                            await object.addTag(new_tag);
+                        } )
+                    } else {
+                        await object.destroy();
+                        return res.status(422).send("tags must be Array of Strings or String");
+                    }
+                }
+
+
+                // modify parent
+                if (placeId) {
+                    // update parentId if exist or send 404 not found
+                    await Place.findByPk(placeId).then(async new_place => {
+                        if (new_place === null) {
+                            await object.destroy();
+                            return res.status(404).json({"message" : "Place not found"});
+                        } else {
+                            await object.setPlace(new_place);
+                        }
+                    });
+
+                }
+
+                await object.save();
+                return res.status(201).json({'id' : object.id});
+            });
+        });
+    },
     // remove place
     removeObject: async (req, res) => {
         try{

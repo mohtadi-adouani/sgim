@@ -8,6 +8,7 @@ const {
     removeObject,
     putObject,
     patchObject,
+    postObject,
 
     // authorization
     auth_read_object,
@@ -33,7 +34,7 @@ router.delete('/:id', auth.verifyToken,auth_write_object, removeObject)
 
 router.put('/:id', auth.verifyToken,auth_write_object,putObject)
 router.patch('/:id', auth.verifyToken,auth_write_object,patchObject)
-//router.post('/:id', auth.verifyToken,auth_write_object,createObject)
+router.post('/', auth.verifyToken,postObject)
 
 
 
