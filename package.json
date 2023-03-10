@@ -7,9 +7,7 @@
     "start": "npx nodemon",
     "start:production": "export NODE_ENV=production && npx nodemon",
     "start:development": "export NODE_ENV=development && npx nodemon",
-    "start:test": "export NODE_ENV=test && npx nodemon ",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon build/app.js\""
+    "start:test": "export NODE_ENV=test && npx nodemon "
   },
   "keywords": [],
   "author": "",
@@ -27,6 +25,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.9.0",
