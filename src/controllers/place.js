@@ -362,7 +362,7 @@ module.exports = {
                     return res.status(422).send("Name required !")
                 }
                 if (description) {
-                    place.setDescription(description);
+                    place.description = description;
                 }
                 if (status_public) {
                     // update status or send 422 if not correct
