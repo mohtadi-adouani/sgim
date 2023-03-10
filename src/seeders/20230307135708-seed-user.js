@@ -26,12 +26,12 @@ module.exports = {
           const ahmad_user = await User.create({
             username: 'Ahmed',
             email: 'Ahmed@isima.fr',
-            password: 'Ahmed',
+            password: bcrypt.hash("Ahmed", 10),
           });
           const hamadou_user = await User.create({
             username: 'Hamadou',
             email: 'Hamadou@isima.fr',
-            password: 'Hamadou',
+            password: bcrypt.hash("Hamadou", 10),
           });
           let users = [mohtadi_user, amine_user, asma_user, ahmad_user, hamadou_user];
 
