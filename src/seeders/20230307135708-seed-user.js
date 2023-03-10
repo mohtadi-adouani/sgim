@@ -49,11 +49,21 @@ module.exports = {
               description: desc_publics[i],
                 status_public : true
             });
+            publics.push(lieu)
             lieu.setParent(maison);
             lieu.setReader(mohtadi_user);
             lieu.setReader(amine_user);
             lieu.setWriter(mohtadi_user);
             lieu.setWriter(amine_user);
+            if(i == 0){
+                let soin_tag = await Tag.create({ name : "Soin" });
+                for (const user of users) {
+                    let brosse = await Object.create({name : 'Brosse à dents de '+user.username});
+                    await brosse.setOwner(user);
+                    await brosse.setPlace(lieu);
+                    await brosse.addTag(soin_tag);
+                }
+            }
           }
 
             // users room
