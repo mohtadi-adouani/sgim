@@ -1,0 +1,27 @@
+{
+    "development": {
+        "envName": "development",
+        "username": "admin",
+        "password": "admin",
+        "database": "sgim_db_dev",
+        "host": "sgim_db",
+        "dialect": "postgres"
+    },
+
+    "production": {
+        "username": "admin",
+        "password": "admin",
+        "database": "sgim_db_prod",
+        "host": "localhost",
+        "dialect": "postgres"
+    },
+
+    "test": {
+        "username": "admin",
+        "password": "admin",
+        "database": "sgim_db_test",
+        "host": "sgim_db",
+        "dialect": "postgres"
+
+    }
+}

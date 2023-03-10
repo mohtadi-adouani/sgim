@@ -4,7 +4,7 @@ services:
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=sgim_db_dev
+      - POSTGRES_DB=sgim_db_prod
     ports:
       - "5432:5432"
   pgadmin:
@@ -14,14 +14,13 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
       - "8080:80"
-#  node:
-#    image: mad/node-app
-#    build:
-#      context: .
-#      dockerfile: ./Dockerfile
-#    ports:
-#      - "3000:3000"
-#      - "4000:4000"
-#      - "5000:5000"
-#    depends_on:
-#      - sgim_db
+  node:
+    image: mad/node-app
+    build:
+      context: ../..
+      dockerfile: ./docker/production/Dockerfile
+    entrypoint: ./docker/production/entrypoint.sh
+    ports:
+      - "4000:4000"
+    depends_on:
+      - sgim_db

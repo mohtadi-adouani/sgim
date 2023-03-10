@@ -8,7 +8,7 @@ const object = require('./routes/object');
 const tag = require('./routes/tag')
 
 // config env
-const config = require('../config/config');
+const config = require('../config/config')[process.env.NODE_ENV];
 
 
 // APP

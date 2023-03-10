@@ -1,0 +1,26 @@
+services:
+  sgim_db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=sgim_db_dev
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@sgim.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "8080:80"
+  node:
+    image: mad/node-app
+    build:
+      context: ../..
+      dockerfile: ./docker/development/Dockerfile
+    entrypoint: ./docker/development/entrypoint.sh
+    ports:
+      - "3000:3000"
+    depends_on:
+      - sgim_db
