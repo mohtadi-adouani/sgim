@@ -41,11 +41,10 @@ app.use('/api/places', place);
 app.use('/api/objects', object);
 // Routing tags
 app.use('/api/tags', tag);
-
-app.listen(config.api_port, () =>  { // ecoute du serveur sur le port 8001
+module.exports = {app}
+app.listen(config.api_port, () =>  { // ecoute du serveur sur le port dans la config
     console.log('Started on port ' + config.api_port)
 })
-
 // Ajout du middleware de cache
 app.use(cacheController({
     maxAge: 60 // Durée de vie maximale du cache en secondes
