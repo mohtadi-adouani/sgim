@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 // config env
-const config = require('../../config/config');
+const config = require('../../config/config')[process.env.NODE_ENV];
 const User = require('../models').User;
 const Object = require('../models').Object;
 
