@@ -30,6 +30,7 @@
     "express-cache-controller": "^1.1.0",
     "jest": "^29.5.0",
     "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0",
     "pg": "^8.9.0",
     "pg-native": "^3.0.1",
     "sequelize-cli": "^6.6.0",
