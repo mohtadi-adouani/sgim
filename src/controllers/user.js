@@ -193,7 +193,7 @@ module.exports = {
         const new_token = jwtUtils.generateTokenForUser(user);
 
         // user
-        res.status(200).json({token : new_token});
+        res.status(200).json({id : user.id, token : new_token});
     }
     res.status(400).send("Invalid Credentials");
     } catch (err) {
