@@ -1,5 +1,6 @@
-const express = require('express')
-const auth = require('../middleware/auth')
+const express = require('express');
+const auth = require('../middleware/auth');
+const cache = require('../cache/cache.all');
 
 const router = express.Router()
 const {
@@ -27,7 +28,7 @@ router.get('/findbyname', auth.verifyToken, getObjectByName)
 router.get('/findbytag', auth.verifyToken, getObjectByTag)
 
 
-router.get('/', getObjects)
+router.get('/', cache.setCache,getObjects)
 router.get('/:id', auth.verifyToken, auth_read_object, getObject)
 
 router.delete('/:id', auth.verifyToken,auth_write_object, removeObject)

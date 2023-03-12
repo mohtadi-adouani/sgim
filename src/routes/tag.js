@@ -1,4 +1,5 @@
 const express = require('express')
+const cache = require('../cache/cache.all');
 const router = express.Router()
 const {
      getTags,
@@ -11,6 +12,7 @@ const {
 
 
 router.get('/',
+    cache.setCache,
     getTags
 )
 

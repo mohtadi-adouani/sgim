@@ -1,5 +1,6 @@
 const express = require('express')
 const auth = require('../middleware/auth');
+const cache = require('../cache/cache.all');
 
 const router = express.Router()
 const {
@@ -29,7 +30,7 @@ router.get('/findbytag', auth.verifyToken, getPlaceByTag);
 
 
 // classic routes
-router.get('/', auth.verifyToken,getPlaces);
+router.get('/', cache.setCache,auth.verifyToken,getPlaces);
 router.get('/:id', auth.verifyToken, auth_read_place, getPlace);
 router.post('/', auth.verifyToken,postPlace);
 router.put('/:id', auth.verifyToken,auth_write_place, putPlace);

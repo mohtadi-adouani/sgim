@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../middleware/auth');
+const cache = require('../cache/cache.all');
 const router = express.Router()
 const {
      getUsers,
@@ -21,7 +22,7 @@ const {
 
 
 // get users
-router.get('/', auth.verifyToken, getUsers);
+router.get('/', cache.setCache,auth.verifyToken, getUsers);
 
 router.get('/:id', auth.verifyToken, auth_read_user, getUser);
 
