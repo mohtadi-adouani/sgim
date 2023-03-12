@@ -24,7 +24,7 @@ Clone the project
 ```
 Go to the project directory
 ```bash
-  cd sgim
+  cd sgim/docker/production/
 ```
 Build Dockerfile
 ```bash
@@ -34,71 +34,45 @@ Run
 ```bash
   docker compose up
 ```
-Stop
+Stop [same directory]
 ```bash
   docker compose down
 ```
 Now you can test your API.
 
 
-
-
-
-
-
-## Migration [only for developers]
-undo last migration
+## Start dev env 
 ```bash
-  npx sequelize-cli db:migrate:undo --env [YOUR ENV] 
+  cd sgim/docker/development/
 ```
-undo all migration
+Build Dockerfile
 ```bash
-  npx sequelize-cli db:migrate:undo:all --env [YOUR ENV]
+  docker compose build
 ```
-migrate
+Run
 ```bash
-  npx sequelize-cli db:migrate --env [YOUR ENV]
+  docker compose up
+```
+Stop [same directory]
+```bash
+  docker compose down
 ```
 
-Install dependencies
-
+## start test
 ```bash
-  npm install
+  cd sgim/docker/test/
 ```
-
-Create databases
+Build Dockerfile
 ```bash
-  # create database production
-  npx sequelize-cli db:create --env production
-  # create database development
-  npx sequelize-cli db:create --env development
-  # create database test
-  npx sequelize-cli db:create --env test
+  docker compose build
 ```
-Undo and do migration
+Run
 ```bash
-   # undo production migration
-   npx sequelize-cli db:migrate:undo:all --env production 
-   # undo development  migration
-   npx sequelize-cli db:migrate:undo:all --env development
-   # undo test  migration
-   npx sequelize-cli db:migrate:undo:all --env test 
-   
-   # do production migration
-   npx sequelize-cli db:migrate --env production
-   # do development migration
-   npx sequelize-cli db:migrate --env development
-   # do test migration
-   npx sequelize-cli db:migrate --env test
+  docker compose up (without -d to see details)
 ```
-## Seeders [only for developers]
-Do
+Stop [same directory]
 ```bash
-  npx sequelize-cli db:seed:all --env [YOUR ENV] 
-```
-undo all seeds
-```bash
-  npx sequelize-cli db:seed:uno:all --env [YOUR ENV]
+  docker compose down
 ```
 
 ## Tech Stack
