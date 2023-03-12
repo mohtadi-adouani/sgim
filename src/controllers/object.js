@@ -530,9 +530,18 @@ module.exports = {
                             [op.like] : '%'+o_name+'%'
                         },
                     },
-                    attributes : ['id']
-                }).then(objects => {
-                    return res.status(200).json({objects})
+                    //attributes : ['id', '']
+                }).then(async objects => {
+                    let objects_read = Array();
+                    for (const object of objects) {
+                        if (await object.hasReader(user) ||
+                            await object.hasWriter(user) ||
+                            (await object.getOwner()).id == user.id ||
+                            object.status_public ){
+                                objects_read.push(object);
+                        }
+                            }
+                    return res.status(200).json({"objects" : objects_read})
                 });
             })
         } catch (error) {
@@ -558,19 +567,30 @@ module.exports = {
                             [op.like] : '%'+o_tag+'%'
                         },
                     },
-                    attributes : ['id']
+                    //attributes : ['id']
                 }).then(async tags => {
                     let arrayObjects = Array();
+                    let objects_read = Array();
                     for (const tag of tags) {
                         await tag.getObjects().then(objects => {
                             objects.forEach( object => {
                                 if(! arrayObjects.includes(object) ){
-                                    arrayObjects.push({ 'id' : object.id})
+                                    arrayObjects.push(object)
                                 }
-                            })
-                        })
+                            });
+
+                        });
                     }
-                    return res.status(200).json({'objects' :arrayObjects})
+                    for (const object of arrayObjects) {
+                        if (await object.hasReader(user) ||
+                            await object.hasWriter(user) ||
+                            (await object.getOwner()).id == user.id ||
+                            object.status_public ){
+                            objects_read.push(object);
+                        }
+                    }
+
+                    return res.status(200).json({'objects' :objects_read});
                 });
             })
         } catch (error) {

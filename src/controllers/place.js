@@ -621,11 +621,20 @@ module.exports = {
                             [op.like] : '%'+p_name+'%'
                         },
                     },
-                    attributes : ['id']
-                }).then(places => {
-                    return res.status(200).json({places})
-                });
-            })
+                    //attributes : ['id']
+                }).then(async places => {
+                    let places_read = Array();
+                    for (const place of places) {
+                        if (await place.hasReader(user) ||
+                            await place.hasWriter(user) ||
+                            (await place.getOwner()).id == user.id ||
+                            place.status_public) {
+                            places_read.push(place);
+                        }
+                        return res.status(200).json({"places" : places_read})
+                    }}
+                );
+                })
         } catch (error) {
             return res.status(500).json(error); //send("Error server");
         }
@@ -648,19 +657,28 @@ module.exports = {
                             [op.like] : '%'+p_tag+'%'
                         },
                     },
-                    attributes : ['id']
+                    //attributes : ['id']
                 }).then(async tags => {
                     let arrayPlaces = Array();
+                    let places_read = Array();
                     for (const tag of tags) {
                         await tag.getPlaces().then(places => {
                             places.forEach( place => {
                                 if(! arrayPlaces.includes(place) ){
-                                    arrayPlaces.push({'id' : place.id})
+                                    arrayPlaces.push(place)
                                 }
                             })
                         })
                     }
-                    return res.status(200).json({'places' :arrayPlaces})
+                    for (const place of arrayPlaces) {
+                        if (await place.hasReader(user) ||
+                            await place.hasWriter(user) ||
+                            (await place.getOwner()).id == user.id ||
+                            place.status_public ){
+                            places_read.push(place);
+                        }
+                    }
+                    return res.status(200).json({'places' : places_read})
                 });
             })
         } catch (error) {
