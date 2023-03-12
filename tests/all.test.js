@@ -4,8 +4,9 @@ var res = request(app);
 var token;
 let Place = require('../src/models').Place;
 let Object = require('../src/models').Object;
-var user_id;
 let User = require('../src/models').User;
+var user_id;
+
 
 test('TEST USERS CONNECTION', async ()=> {
     res.post('api/users/login')
