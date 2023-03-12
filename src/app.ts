@@ -11,11 +11,10 @@ const tag = require('./routes/tag')
 const config = require('../config/config')[process.env.NODE_ENV];
 
 // Cache
-import cacheController from 'express-cache-controller';
+// //import cacheController from 'express-cache-controller';
+// const cacheController = require('express-cache-controller');
 
 const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
 
 // APP
 let app = express(); // création de l'objet représentant notre application express
@@ -30,13 +29,10 @@ app.use((req, res, next)=> {
 })
 
 app.get('/', function(req, res) { // création de la route sous le verbe get
-    res.send('Hello world p  ! ') // envoi de hello world a l'utilisateur
+    res.send('Welcome to sgim API! ') // envoi de hello world a l'utilisateur
 })
 
-// Ajout du middleware de cache
-app.use(cacheController({
-    maxAge: 60 // Durée de vie maximale du cache en secondes
-}));
+
 // Utiliser le middleware de journalisation "morgan" pour enregistrer les informations de cache
 app.use(morgan('combined', {
     skip: (req, res) => {
