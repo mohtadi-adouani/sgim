@@ -28,12 +28,12 @@ module.exports = {
         User.findOne( {
             where: { id: req.params.id },
             attributes : {exclude: ['password', 'ObjectId']},
-            include: [ {model : Place, as : 'Oplace', attributes : ['id']},
-                {model : Place, as : 'Wplace', attributes : ['id']},
-                {model : Place, as : 'Rplace', attributes : ['id']},
-                {model : Object, as : 'Oobject', attributes : ['id']},
-                {model : Object, as : 'Wobject', attributes : ['id']},
-                {model : Object, as : 'Robject', attributes : ['id']}]
+            include: [ {model : Place, as : 'Oplace', attributes : ['id','name']},
+                {model : Place, as : 'Wplace', attributes : ['id','name']},
+                {model : Place, as : 'Rplace', attributes : ['id','name']},
+                {model : Object, as : 'Oobject', attributes : ['id','name']},
+                {model : Object, as : 'Wobject', attributes : ['id','name']},
+                {model : Object, as : 'Robject', attributes : ['id','name']}]
         }).then(user => {
             if(user === null ){
                 return res.status(404).send("User not found")
